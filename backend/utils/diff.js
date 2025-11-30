@@ -50,7 +50,7 @@ function diffTexts(oldText, newText) {
       removedCounts[word] = oldCount - newCount;
     }
   });
-
+  
   return {
     addedWords,
     removedWords,
@@ -59,6 +59,7 @@ function diffTexts(oldText, newText) {
     oldWordCount: oldArr.length,
     newWordCount: newArr.length
   };
+
 }
 
 module.exports = diffTexts;
