@@ -92,7 +92,7 @@ Backend stores all versions in:
 
 # 🔌 API Documentation
 
-## `GET /versions`
+## `GET <URL>/versions`
 Returns a list of all saved versions (newest first).
 
 **Response Example**
@@ -110,7 +110,7 @@ Returns a list of all saved versions (newest first).
   }
 ]
 ```
-## `POST /save-version`
+## `POST <URL>/save-version`
 
 Saves a new version and performs diff computation.
 
@@ -134,6 +134,31 @@ Saves a new version and performs diff computation.
   "newWordCount": 4
 }
 ```
+
+---
+
+# 🧠 How the Diff Algorithm Works
+
+The backend performs a custom text-difference calculation every time the user saves a new version. It works by splitting the previous and current text into individual words, then comparing both sets to determine what changed. Using set-based operations, 
+
+it calculates:
+
+`
+addedWords → words present in the new text but not in the old
+`
+
+`
+removedWords → words present in the old text but not in the new
+`
+
+
+It also counts word occurrences, measures the old/new character lengths, and computes the old/new total word counts. The raw content is stored internally only to compute the next diff, ensuring the logic remains entirely custom without relying on any external diff libraries.
+
+---
+# 🔒 Note on Internal Storage (_rawContent)
+
+The backend stores a field called _rawContent for internal use only.
+This field is used solely to compute the difference with the next saved version. It is never exposed in API responses and is removed before sending data back to the frontend, ensuring cleaner output and safer data handling.
 
 ---
 
