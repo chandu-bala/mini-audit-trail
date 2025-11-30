@@ -1,107 +1,225 @@
-/* General page styling */
+/* General Page */
 body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #f5f7fa;
-    color: #333;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f6f8fc;
+  color: #222;
 }
 
-/* Page container */
+/* Main container */
 .app-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 30px;
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 10px;
 }
 
-/* Heading */
+/* Title */
 .main-title {
-    text-align: center;
-    font-size: 28px;
-    margin-bottom: 30px;
-    color: #1e1e1e;
+  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: 600;
 }
 
-/* Editor & history layout */
-.editor-layout {
-    display: flex;
-    gap: 30px;
+/* Top row: editor (left) + image (right) */
+.top-block {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
 }
 
-/* Content Editor */
-.editor-box {
-    flex: 2;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+/* Editor Card */
+.editor-card {
+  flex: 1;
+  background: white;
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
 }
 
-.editor-box h3 {
-    margin-bottom: 10px;
+/* Editor Header */
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
 }
 
-textarea {
-    width: 92%;
-    padding: 12px;
-    font-size: 15px;
-    line-height: 1.5;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    resize: vertical;
+/* Textarea */
+.editor-textarea {
+  width: 92%;
+  min-height: 240px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d9e6;
+  resize: vertical;
+  font-size: 15px;
+  background: #fbfcff;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
+}
+
+/* Save area */
+.save-row {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
 /* Save button */
 .save-btn {
-    margin-top: 15px;
-    padding: 12px 20px;
-    font-size: 16px;
-    background: #0077ff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.2s;
+  padding: 10px 16px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0,123,255,0.2);
 }
-
 .save-btn:hover {
-    background: #005fcc;
+  background: #0068d4;
 }
-
 .save-btn:disabled {
-    background: #9abef7;
-    cursor: not-allowed;
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-/* Version History Panel */
-.history-box {
-    flex: 1;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-    max-height: 600px;
-    overflow-y: auto;
+/* RIGHT SIDE IMAGE (NO PADDING / CLEAN LOOK) */
+
+
+/* History Panel (below full width) */
+.history-panel {
+  margin-top: 26px;
+  background: white;
+  padding: 18px;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
 }
 
+/* History entry */
 .history-entry {
-    padding: 15px;
-    margin-bottom: 15px;
-    border: 1px solid #e3e3e3;
-    border-radius: 8px;
-    background: #fafafa;
-    transition: 0.2s;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #e4e7ef;
+  border-radius: 8px;
+  background: #fcfdff;
 }
-
 .history-entry:hover {
-    background: #f1f1f1;
+  background: #f3f7ff;
 }
-
-.history-entry strong {
-    color: #333;
-}
-
 .meta-info {
-    font-size: 13px;
-    color: #777;
-    margin-top: 5px;
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 6px;
 }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .top-block {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .image-card {
+    width: 100%;
+  }
+}
+/* entire editor card */
+.editor-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+/* ROW: image left + editor right */
+.image-and-editor-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+/* IMAGE CONTAINER */
+/* Fixed-size image container – SAFE to modify */
+.editor-image-box {
+  width: 300px;      /* <-- change this to adjust image width */
+  height: 325px;     /* <-- change this to adjust image height */
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;    /* prevents the image box from collapsing or pushing editor */
+}
+
+/* Image fits nicely inside its box */
+.editor-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+
+/* ROBOT IMAGE */
+
+
+/* EDITOR CONTENT */
+.editor-content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.editor-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.editor-subtitle {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+/* TEXTAREA */
+.editor-textarea {
+  width: 96%;
+  min-height: 220px;
+  padding: 12px;
+  border: 1px solid #d1d9e6;
+  border-radius: 8px;
+  resize: vertical;
+  font-size: 15px;
+  background: #fbfcff;
+  margin-top: 12px;
+}
+
+/* SAVE ROW */
+.save-row {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* SAVE BUTTON */
+.save-btn {
+  padding: 10px 16px;
+  background: #007bff;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+.save-btn:hover {
+  background: #0066d4;
+}
+
+/* CHAR COUNT */
+.char-count {
+  font-size: 13px;
+  color: #6b7280;
+}
+
