@@ -6,8 +6,6 @@ export default function Editor() {
   const [versions, setVersions] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Fetch version history on load
-  
 
   async function fetchVersions() {
     try {
@@ -18,13 +16,13 @@ export default function Editor() {
       console.error("Error fetching versions:", err);
     }
   }
-  useEffect(() => {
+  
+useEffect(() => {
   async function loadVersions() {
     await fetchVersions();
   }
   loadVersions();
 }, []);
-
 
   async function saveVersion() {
     setLoading(true);
@@ -37,10 +35,9 @@ export default function Editor() {
       });
 
       const saved = await res.json();
-
-      // Update UI immediately
       setVersions([saved, ...versions]);
       setLoading(false);
+
     } catch (err) {
       console.error("Error saving version:", err);
       setLoading(false);
@@ -48,82 +45,74 @@ export default function Editor() {
   }
 
   return (
-    <div style={{ padding: "20px", maxWidth: "1100px", margin: "0 auto" }}>
-      <h2>Mini Audit Trail Generator</h2>
+    <div className="app-container">
+      <h2 className="main-title">Mini Audit Trail Generator</h2>
 
-      {/* CONTENT EDITOR */}
-      <div style={{ marginBottom: "20px" }}>
-        <h3>Content Editor</h3>
-        <textarea
-          rows={10}
-          style={{
-            width: "100%",
-            padding: "10px",
-            fontSize: "16px",
-            borderRadius: "6px",
-            border: "1px solid #ccc"
-          }}
-          placeholder="Type or edit content here..."
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        ></textarea>
+      <div className="editor-layout">
 
-        <button
-          onClick={saveVersion}
-          disabled={loading}
-          style={{
-            marginTop: "10px",
-            padding: "10px 20px",
-            fontSize: "16px",
-            cursor: "pointer",
-            borderRadius: "6px",
-            background: "#007bff",
-            color: "white",
-            border: "none"
-          }}
-        >
-          {loading ? "Saving..." : "Save Version"}
-        </button>
-      </div>
+        {/* Editor */}
+        <div className="editor-box">
+          <h3>Content Editor</h3>
 
-      {/* VERSION HISTORY */}
-      <div>
-        <h3>Version History</h3>
+          <textarea
+            rows={12}
+            placeholder="Type or edit content here..."
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          ></textarea>
 
-        {versions.length === 0 ? (
-          <p>No versions saved yet.</p>
-        ) : (
-          <div style={{ marginTop: "10px" }}>
-            {versions.map((version) => (
-              <div
-                key={version.id}
-                style={{
-                  padding: "15px",
-                  border: "1px solid #ddd",
-                  borderRadius: "8px",
-                  marginBottom: "12px"
-                }}
-              >
-                <strong>Timestamp:</strong> {version.timestamp} <br />
-                <strong>Added Words:</strong>{" "}
-                {version.addedWords?.length > 0
-                  ? version.addedWords.join(", ")
-                  : "None"}
+          <button
+            className="save-btn"
+            onClick={saveVersion}
+            disabled={loading}
+          >
+            {loading ? "Saving..." : "Save Version"}
+          </button>
+        </div>
+
+        {/* Version History */}
+        <div className="history-box">
+          <h3>Version History</h3>
+
+          {versions.length === 0 ? (
+            <p>No versions saved yet.</p>
+          ) : (
+            versions.map((v) => (
+              <div key={v.id} className="history-entry">
+                <strong>{v.timestamp}</strong>
                 <br />
-                <strong>Removed Words:</strong>{" "}
-                {version.removedWords?.length > 0
-                  ? version.removedWords.join(", ")
-                  : "None"}
+
+                <strong>Added:</strong>{" "}
+                {v.addedWords?.length > 0 ? v.addedWords.join(", ") : "None"}
                 <br />
-                <small>
-                  Old Length: {version.oldLength} | New Length:{" "}
-                  {version.newLength}
-                </small>
+
+                <strong>Removed:</strong>{" "}
+                {v.removedWords?.length > 0 ? v.removedWords.join(", ") : "None"}
+
+                <div className="meta-info">
+                  Old Length: {v.oldLength} | New Length: {v.newLength}
+                </div>
               </div>
-            ))}
-          </div>
-        )}
+            ))
+          )}
+        </div>
+
       </div>
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
