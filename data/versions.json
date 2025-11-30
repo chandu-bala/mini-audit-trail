@@ -1,0 +1,122 @@
+[
+  {
+    "id": "d14a4740-3bad-45c6-8feb-c43456407a6e",
+    "timestamp": "2025-11-30 10:57:26",
+    "addedWords": [
+      "this",
+      "is",
+      "the",
+      "first",
+      "version",
+      "of",
+      "my",
+      "text"
+    ],
+    "removedWords": [],
+    "addedCounts": {
+      "this": 1,
+      "is": 1,
+      "the": 1,
+      "first": 1,
+      "version": 1,
+      "of": 1,
+      "my": 1,
+      "text": 1
+    },
+    "removedCounts": {},
+    "oldLength": 0,
+    "newLength": 37,
+    "oldWordCount": 0,
+    "newWordCount": 8,
+    "_rawContent": "This is the first version of my text."
+  },
+  {
+    "id": "a6a24346-8af3-4ab4-82b3-a566d8fce727",
+    "timestamp": "2025-11-30 10:57:40",
+    "addedWords": [
+      "second",
+      "updated",
+      "with",
+      "changes"
+    ],
+    "removedWords": [
+      "first"
+    ],
+    "addedCounts": {
+      "second": 1,
+      "updated": 1,
+      "with": 1,
+      "changes": 1
+    },
+    "removedCounts": {
+      "first": 1
+    },
+    "oldLength": 37,
+    "newLength": 59,
+    "oldWordCount": 8,
+    "newWordCount": 11,
+    "_rawContent": "This is the second updated version of my text with changes."
+  },
+  {
+    "id": "27893cc3-9a49-4dee-a283-404c03b7cb15",
+    "timestamp": "2025-11-30 11:04:07",
+    "addedWords": [
+      "hello",
+      "first"
+    ],
+    "removedWords": [
+      "the",
+      "second",
+      "updated",
+      "of",
+      "text",
+      "with",
+      "changes"
+    ],
+    "addedCounts": {
+      "hello": 1,
+      "first": 1
+    },
+    "removedCounts": {
+      "the": 1,
+      "second": 1,
+      "updated": 1,
+      "of": 1,
+      "text": 1,
+      "with": 1,
+      "changes": 1
+    },
+    "oldLength": 59,
+    "newLength": 31,
+    "oldWordCount": 11,
+    "newWordCount": 6,
+    "_rawContent": "Hello this is my first version."
+  },
+  {
+    "id": "f52a8c12-a349-4b5b-baa9-e6caec20b2c2",
+    "timestamp": "2025-11-30 11:12:52",
+    "addedWords": [],
+    "removedWords": [
+      "hello",
+      "this",
+      "is",
+      "my",
+      "first",
+      "version"
+    ],
+    "addedCounts": {},
+    "removedCounts": {
+      "hello": 1,
+      "this": 1,
+      "is": 1,
+      "my": 1,
+      "first": 1,
+      "version": 1
+    },
+    "oldLength": 31,
+    "newLength": 0,
+    "oldWordCount": 6,
+    "newWordCount": 0,
+    "_rawContent": ""
+  }
+]
