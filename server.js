@@ -12,28 +12,52 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// JSON file path
-const VERSION_FILE = path.join(__dirname, "data/versions.json");
+// ---------------------------
+// RAILWAY STORAGE CONFIG
+// ---------------------------
 
-// Load existing versions or create empty file
-function loadVersions() {
-  if (!fs.existsSync(VERSION_FILE)) {
-    fs.writeFileSync(VERSION_FILE, JSON.stringify([]));
-  }
-  return JSON.parse(fs.readFileSync(VERSION_FILE));
+// Railway persistent volume is mounted at /data
+const DATA_DIR = process.env.DATA_DIR || "/data";
+const VERSION_FILE = path.join(DATA_DIR, "versions.json");
+
+// Ensure folder exists
+if (!fs.existsSync(DATA_DIR)) {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
 }
 
+// Ensure versions.json exists
+if (!fs.existsSync(VERSION_FILE)) {
+  fs.writeFileSync(VERSION_FILE, JSON.stringify([]));
+}
+
+// Safe loader
+function loadVersions() {
+  try {
+    const raw = fs.readFileSync(VERSION_FILE, "utf-8");
+    return JSON.parse(raw);
+  } catch (err) {
+    console.error("Error reading versions.json → Resetting", err);
+    fs.writeFileSync(VERSION_FILE, JSON.stringify([]));
+    return [];
+  }
+}
+
+// Safe writer
 function saveVersions(versions) {
   fs.writeFileSync(VERSION_FILE, JSON.stringify(versions, null, 2));
 }
 
-// GET /versions  → return history list
+// ---------------------------
+// API ROUTES
+// ---------------------------
+
+// GET /versions → newest first
 app.get("/versions", (req, res) => {
   const versions = loadVersions();
-  res.json(versions.reverse()); // newest first
+  res.json([...versions].reverse()); 
 });
 
-// POST /save-version  → save new version & compute diff
+// POST /save-version → compute diff + save
 app.post("/save-version", (req, res) => {
   const { content } = req.body;
 
@@ -58,19 +82,21 @@ app.post("/save-version", (req, res) => {
     newLength: content.length,
     oldWordCount: diff.oldWordCount,
     newWordCount: diff.newWordCount,
-    _rawContent: content // stored internally for next diff
+    _rawContent: content // Internal use only
   };
 
   versions.push(newEntry);
   saveVersions(versions);
 
-  // send clean version (no raw text)
-  const responseCopy = { ...newEntry };
-  delete responseCopy._rawContent;
+  // Remove _rawContent before sending
+  const clientCopy = { ...newEntry };
+  delete clientCopy._rawContent;
 
-  res.json(responseCopy);
+  res.json(clientCopy);
 });
 
-// Start server
-const PORT = 4000;
+// ---------------------------
+// START SERVER (Railway must use PORT)
+// ---------------------------
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
